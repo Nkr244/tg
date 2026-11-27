@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "key": "7b918afe7a1809df3e0986530a8c14f1568c5abaf833f9448f61cdcf9f49bfe1",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3857",
+      "title": "Bread and Fred (Epic Games) Giveaway",
+      "description": "The mountain awaits you! Claim Bread and Fred for free via Epic Games Store! Bread and Fred is a cute 2d co-op platformer where two players must cooperate to climb to the top of a snowy mountain.",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "Epic Games Store"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/bread-and-fred-epic-games-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/6b0857f437cbd.jpg",
+      "startsAt": "2026-11-26T11:01:56.000Z",
+      "endsAt": "2026-12-03T16:00:00.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/bread-and-fred-epic-games-giveaway",
+      "fetchedAt": "2026-11-27T10:33:22.602Z"
+    },
+    "sentAt": "2026-11-27T10:33:24.824Z",
+    "messageId": 4
+  }
+]
