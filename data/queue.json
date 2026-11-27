@@ -140,29 +140,6 @@
     "status": "queued"
   },
   {
-    "key": "6faefe381a5b676db0586b7c9c6632bc4cdf6dc2a730f73085a12b8d84e1b3a6",
-    "channelId": "free-games",
-    "offer": {
-      "id": "gamerpower:3322",
-      "title": "Sausage Hunter (Indiegala) Giveaway",
-      "description": "The hunt for the magic sausage starts now! Download Sausage Hunter for free on IndieGala. Sausage Hunter is a 2D platformer with hand-drawn graphics and intriguing puzzles... plus a kitten and sausages, for some reason.",
-      "category": "game",
-      "platforms": [
-        "PC",
-        "DRM-Free"
-      ],
-      "currentPrice": "0",
-      "url": "https://www.gamerpower.com/sausage-hunter-pc-giveaway",
-      "imageUrl": "https://www.gamerpower.com/offers/1b/68eadb2d6f0c4.jpg",
-      "startsAt": "2026-09-19T09:15:50.000Z",
-      "source": "GamerPower",
-      "sourceUrl": "https://www.gamerpower.com/sausage-hunter-pc-giveaway",
-      "fetchedAt": "2026-11-27T10:48:28.582Z"
-    },
-    "queuedAt": "2026-11-27T10:48:28.582Z",
-    "status": "queued"
-  },
-  {
     "key": "0f35c2ba9b63c8accea115c3556d2f1c532a81f57ec9ed017e07c145c3464ce7",
     "channelId": "free-games",
     "offer": {
@@ -277,28 +254,26 @@
     "status": "queued"
   },
   {
-    "key": "4b9e36b69cd510e6e13db9d09c33dda953f861fcd7b03aba7d629c030abb137c",
+    "key": "dbc675b016bb95218e057174f9ef0093fb667e2c3f1d0f400c9259be7214a6f4",
     "channelId": "free-games",
     "offer": {
-      "id": "gamerpower:3860",
-      "title": "Dead Age 2 (GOG) Giveaway",
-      "description": "Download Dead Age 2 for free via GOG! Dead Age 2 is a fun indie survival RPG with rogue-like features, fast-paced turn-based combat and survival all in one.",
+      "id": "gamerpower:3334",
+      "title": "Mysterious House (IndieGala) Giveaway",
+      "description": "Mysterious House is free this week on Indiegala! Mysterious House is a indie 2d platformer filled with challenging puzzles and obstacles.",
       "category": "game",
       "platforms": [
         "PC",
-        "GOG",
         "DRM-Free"
       ],
       "currentPrice": "0",
-      "url": "https://www.gamerpower.com/dead-age-2-gog-giveaway",
-      "imageUrl": "https://www.gamerpower.com/offers/1b/6b0969de22e37.jpg",
-      "startsAt": "2026-11-27T06:30:38.000Z",
-      "endsAt": "2026-11-30T00:00:00.000Z",
+      "url": "https://www.gamerpower.com/mysterious-house-pc-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/68fcca241e9d0.jpg",
+      "startsAt": "2026-11-27T08:53:52.000Z",
       "source": "GamerPower",
-      "sourceUrl": "https://www.gamerpower.com/dead-age-2-gog-giveaway",
-      "fetchedAt": "2026-11-27T13:54:15.116Z"
+      "sourceUrl": "https://www.gamerpower.com/mysterious-house-pc-giveaway",
+      "fetchedAt": "2026-11-27T15:00:48.378Z"
     },
-    "queuedAt": "2026-11-27T13:54:15.116Z",
+    "queuedAt": "2026-11-27T15:00:48.378Z",
     "status": "queued"
   }
 ]
