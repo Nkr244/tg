@@ -275,5 +275,54 @@
     },
     "queuedAt": "2026-11-27T10:48:28.582Z",
     "status": "queued"
+  },
+  {
+    "key": "4b9e36b69cd510e6e13db9d09c33dda953f861fcd7b03aba7d629c030abb137c",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3860",
+      "title": "Dead Age 2 (GOG) Giveaway",
+      "description": "Download Dead Age 2 for free via GOG! Dead Age 2 is a fun indie survival RPG with rogue-like features, fast-paced turn-based combat and survival all in one.",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "GOG",
+        "DRM-Free"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/dead-age-2-gog-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/6b0969de22e37.jpg",
+      "startsAt": "2026-11-27T06:30:38.000Z",
+      "endsAt": "2026-11-30T00:00:00.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/dead-age-2-gog-giveaway",
+      "fetchedAt": "2026-11-27T13:54:15.116Z"
+    },
+    "queuedAt": "2026-11-27T13:54:15.116Z",
+    "status": "queued"
+  },
+  {
+    "key": "92aeecf36f4b6e2755946b601a4e45e28f5ec159810ab51b895f1ee172d63bf3",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3859",
+      "title": "Vertical Drop Heroes HD Steam Key Giveaway",
+      "description": "Claim your free Vertical Drop Heroes HD Steam key via Fanatical and keep this Steam game forever! Vertical Drop Heroes is a 2d procedural platformer RPG with roguelike elements. Don´t miss it!",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "Steam"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/vertical-drop-heroes-hd-steam-key-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/6b0967296e680.jpg",
+      "startsAt": "2026-11-27T06:19:05.000Z",
+      "endsAt": "2026-11-28T00:00:00.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/vertical-drop-heroes-hd-steam-key-giveaway",
+      "fetchedAt": "2026-11-27T13:54:15.116Z"
+    },
+    "queuedAt": "2026-11-27T13:54:15.116Z",
+    "status": "queued"
   }
 ]
