@@ -80,6 +80,7 @@ describe('source and validation', () => {
     expect(offer.id).toBe('gamerpower:123');
     expect(offer.originalPrice).toBeUndefined();
     expect(offer.platforms).toEqual(['PC', 'Steam']);
+    expect(offer.endsAt).toBe('2026-12-01T00:00:00.000Z');
     expect(validOffer(offer, channel, now)).toBe(true);
     expect(
       normalizeGamerPower({ ...raw, end_date: 'N/A' }, now)?.endsAt,
@@ -151,6 +152,15 @@ describe('deduplication and schedule', () => {
   });
   it('enforces local hours, daily limit, interval and deadline priority', () => {
     expect(canPublish(channel, [], now)).toBe(true);
+    expect(canPublish(channel, [], new Date('2026-11-27T06:00:00Z'))).toBe(
+      true,
+    );
+    expect(canPublish(channel, [], new Date('2026-11-27T18:59:00Z'))).toBe(
+      true,
+    );
+    expect(canPublish(channel, [], new Date('2026-11-27T19:00:00Z'))).toBe(
+      false,
+    );
     expect(canPublish(channel, [], new Date('2026-11-27T04:00:00Z'))).toBe(
       false,
     );
@@ -184,21 +194,34 @@ describe('generation and state', () => {
     expect(text).not.toContain('Обычная цена');
     expect(text).toContain('Доступность по регионам');
   });
-  it('generates a 1200 x 675 JPEG for long Cyrillic titles', async () => {
-    const image = await generateImage(
-      {
-        ...offer,
-        title:
-          'Очень длинное название игры с русскими буквами и множеством слов',
-      },
-      channel,
+  it('generates three distinct 1200 x 675 covers without fetching game art', async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
+    const images = await Promise.all(
+      [0, 1, 2].map((variant) =>
+        generateImage(
+          {
+            ...offer,
+            id: `gamerpower:${variant}`,
+            title:
+              'Очень длинное название игры с русскими буквами и множеством слов',
+            imageUrl: 'https://example.invalid/unlicensed-art.jpg',
+          },
+          channel,
+        ),
+      ),
     );
     const sharp = (await import('sharp')).default;
-    expect(await sharp(image).metadata()).toMatchObject({
-      width: 1200,
-      height: 675,
-      format: 'jpeg',
-    });
+    for (const image of images)
+      expect(await sharp(image).metadata()).toMatchObject({
+        width: 1200,
+        height: 675,
+        format: 'jpeg',
+      });
+    expect(new Set(images.map((image) => image.toString('base64'))).size).toBe(
+      3,
+    );
+    expect(fetchMock).not.toHaveBeenCalled();
   });
   it('persists queue, history and report marker', async () => {
     const dir = await mkdtemp(join(tmpdir(), 'telegram-state-'));

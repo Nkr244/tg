@@ -10,13 +10,18 @@ function requiredString(value: unknown): string | undefined {
     : undefined;
 }
 
-function dateValue(value: unknown): string | undefined {
+function dateValue(value: unknown, deadline = false): string | undefined {
   const text = requiredString(value);
   if (!text) return undefined;
   // GamerPower timestamps have no timezone. Parse as UTC consistently and
   // confirm the active status through the detail API before publication.
   const date = new Date(text.replace(' ', 'T') + 'Z');
-  return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+  if (Number.isNaN(date.getTime())) return undefined;
+  // 23:59 is a date-only placeholder in many listings. The store may end
+  // hours earlier, so stop publishing at the start of that UTC date.
+  if (deadline && date.getUTCHours() === 23 && date.getUTCMinutes() === 59)
+    date.setUTCHours(0, 0, 0, 0);
+  return date.toISOString();
 }
 
 export function normalizeGamerPower(raw: Raw, now: Date): Offer | undefined {
@@ -56,7 +61,7 @@ export function normalizeGamerPower(raw: Raw, now: Date): Offer | undefined {
     url: sourceUrl,
     imageUrl: requiredString(raw.image),
     startsAt: dateValue(raw.published_date),
-    endsAt: dateValue(raw.end_date),
+    endsAt: dateValue(raw.end_date, true),
     source: 'GamerPower',
     sourceUrl,
     fetchedAt: now.toISOString(),

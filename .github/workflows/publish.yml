@@ -21,6 +21,8 @@ concurrency:
 
 jobs:
   publish:
+    # Standard GitHub-hosted runners are free only while this repository is public.
+    if: ${{ toJSON(github.event.repository.private) == 'false' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -38,7 +40,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
-          cache: npm
+          package-manager-cache: false
       - run: npm ci --no-audit --no-fund
       - run: npm run build
       - name: Configure state commits

@@ -19,13 +19,7 @@ const escapeXml = (value: string): string =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
 
-function titleLines(title: string): {
-  lines: string[];
-  size: number;
-  step: number;
-} {
-  const size = title.length <= 42 ? 60 : title.length <= 78 ? 48 : 38;
-  const max = Math.floor(725 / (size * 0.64));
+function wrapTitle(title: string, max: number): string[] {
   const words = title.trim().split(/\s+/);
   const lines: string[] = [];
   for (const word of words) {
@@ -42,16 +36,45 @@ function titleLines(title: string): {
       lines[lines.length - 1] += ` ${word}`;
     }
   }
-  const shown = lines.slice(0, 3);
-  if (lines.length > 3 && shown[2]) shown[2] = `${shown[2].slice(0, -1)}…`;
-  return { lines: shown, size, step: size + 13 };
+  return lines.filter(Boolean);
+}
+
+function titleLines(title: string): {
+  lines: string[];
+  size: number;
+  step: number;
+  firstY: number;
+  badgeY: number;
+} {
+  for (const size of [98, 90, 82, 74, 66, 58, 52, 46, 40]) {
+    const lines = wrapTitle(title, Math.floor(710 / (size * 0.63)));
+    const limit = size >= 82 ? 2 : size >= 58 ? 3 : 4;
+    if (lines.length > limit) continue;
+    const firstY = [0, 335, 307, 285, 275][lines.length] ?? 275;
+    const step = size + 10;
+    const lastY = firstY + (lines.length - 1) * step;
+    if (lastY > 438) continue;
+    return {
+      lines,
+      size,
+      step,
+      firstY,
+      badgeY: Math.min(464, Math.max(405, lastY + 40)),
+    };
+  }
+  // Extremely long source titles remain legible on the cover; the caption
+  // still carries the full title.
+  const lines = wrapTitle(title, 28).slice(0, 4);
+  lines[3] = `${lines[3]!.slice(0, -1)}…`;
+  return { lines, size: 40, step: 50, firstY: 275, badgeY: 464 };
 }
 
 function terminalArtwork(variant: number): string {
-  const mark =
-    variant === 0
-      ? `<path d="M961 354h88v83h-88z M1005 354v83 M961 379h88 M973 342c-17-27 20-39 32 0 M1037 342c17-27-20-39-32 0" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round" stroke-linecap="square"/>`
-      : `<path d="M936 409l19-53q8-23 31-22h38q13 13 27 0h32q22 0 29 22l17 53q5 28-23 27l-39-25h-64l-39 25q-28 1-28-27z" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round"/><path d="M974 365v40 M954 385h40" stroke="${colors.yellow}" stroke-width="8"/><circle cx="1084" cy="370" r="7" fill="${colors.yellow}"/><circle cx="1105" cy="390" r="7" fill="${colors.yellow}"/>`;
+  const mark = [
+    `<path d="M961 354h88v83h-88z M1005 354v83 M961 379h88 M973 342c-17-27 20-39 32 0 M1037 342c17-27-20-39-32 0" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round" stroke-linecap="square"/>`,
+    `<path d="M936 409l19-53q8-23 31-22h38q13 13 27 0h32q22 0 29 22l17 53q5 28-23 27l-39-25h-64l-39 25q-28 1-28-27z" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round"/><path d="M974 365v40 M954 385h40" stroke="${colors.yellow}" stroke-width="8"/><circle cx="1084" cy="370" r="7" fill="${colors.yellow}"/><circle cx="1105" cy="390" r="7" fill="${colors.yellow}"/>`,
+    `<path d="M955 420h140v-59h-140z M972 378h105 M985 391v18 M976 400h18" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round"/><circle cx="1050" cy="398" r="7" fill="${colors.yellow}"/><circle cx="1073" cy="398" r="7" fill="${colors.yellow}"/><path d="M973 347v-18h104v18" fill="none" stroke="${colors.yellow}" stroke-width="7"/>`,
+  ][variant];
   return `<g>
     <rect x="858" y="209" width="284" height="281" rx="18" fill="#06140F" stroke="${colors.green}" stroke-width="5"/>
     <path d="M860 256h280" stroke="${colors.green}" stroke-width="5"/>
@@ -69,14 +92,24 @@ export async function generateImage(
   offer: Offer,
   channel: Channel,
 ): Promise<Buffer> {
-  const variant = (Number(offer.id.replace(/\D/g, '').slice(-5)) || 0) % 2;
+  const variant = (Number(offer.id.replace(/\D/g, '').slice(-5)) || 0) % 3;
   const title = titleLines(displayTitle(offer.title));
   const titleSvg = title.lines
     .map(
       (line, index) =>
-        `<text x="85" y="${291 + index * title.step}" font-size="${title.size}" font-weight="800" fill="${colors.white}">${escapeXml(line)}</text>`,
+        `<text x="82" y="${title.firstY + index * title.step}" font-size="${title.size}" font-weight="800" fill="${colors.white}">${escapeXml(line)}</text>`,
     )
     .join('');
+  const badge = [
+    { fill: colors.yellow, stroke: '#FFE169', text: colors.background },
+    { fill: colors.green, stroke: '#9DFFC0', text: colors.background },
+    { fill: '#06140F', stroke: colors.yellow, text: colors.yellow },
+  ][variant]!;
+  const kicker = [
+    '>_ НАЙДЕНА РАЗДАЧА',
+    '>_ БЕСПЛАТНЫЙ ДРОП',
+    '>_ ЗАПУСК ХАЛЯВЫ',
+  ][variant];
   const date = offer.endsAt
     ? new Intl.DateTimeFormat('ru-RU', {
         timeZone: 'UTC',
@@ -109,12 +142,11 @@ export async function generateImage(
     <path d="M53 150h1094" stroke="${colors.green}" stroke-width="2" opacity=".8"/>
     <path d="M52 168h19 M81 168h19 M110 168h19 M139 168h19" stroke="${colors.yellow}" stroke-width="5"/>
     <g font-family="DejaVu Sans Mono, Consolas, monospace">
-      <text x="79" y="220" font-size="24" font-weight="700" fill="${colors.green}">&gt;_ НАЙДЕНА РАЗДАЧА</text>
+      <text x="79" y="220" font-size="24" font-weight="700" fill="${colors.green}">${escapeXml(kicker!)}</text>
       ${titleSvg}
-      <rect x="79" y="469" width="445" height="80" rx="8" fill="${colors.yellow}"/>
-      <path d="M79 469h445v80H79z" fill="none" stroke="#FFE169" stroke-width="3"/>
-      <text x="102" y="522" font-size="43" font-weight="900" fill="${colors.background}">БЕСПЛАТНО</text>
-      <text x="545" y="518" font-size="27" fill="${colors.green}">&gt; ЗАБРАТЬ</text>
+      <rect x="79" y="${title.badgeY}" width="445" height="85" rx="8" fill="${badge.fill}" stroke="${badge.stroke}" stroke-width="3"/>
+      <text x="102" y="${title.badgeY + 56}" font-size="43" font-weight="900" fill="${badge.text}">БЕСПЛАТНО</text>
+      <text x="545" y="${title.badgeY + 54}" font-size="27" fill="${colors.green}">&gt; ЗАБРАТЬ</text>
       ${terminalArtwork(variant)}
       <path d="M55 566h1090" stroke="${colors.green}" stroke-width="2" opacity=".7"/>
       <text x="82" y="600" font-size="16" fill="${colors.muted}">ПЛАТФОРМА</text>

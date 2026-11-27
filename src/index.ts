@@ -139,7 +139,7 @@ async function publish(
   );
   if (!entry) return;
   const source = sources[entry.offer.id.split(':')[0]!];
-  if (source?.verify && !(await source.verify(entry.offer, now))) {
+  if (source?.verify && !(await source.verify(entry.offer, new Date()))) {
     state.queue = state.queue.filter((item) => item !== entry);
     await checkpoint(state, `invalid ${channel.id}`);
     return;
@@ -148,6 +148,22 @@ async function publish(
   const caption = generatePost(entry.offer, channel);
   entry.status = 'sending';
   await checkpoint(state, `sending ${channel.id}`);
+  let stillActive: boolean;
+  try {
+    const currentTime = new Date();
+    stillActive =
+      validOffer(entry.offer, channel, currentTime) &&
+      (!source?.verify || (await source.verify(entry.offer, currentTime)));
+  } catch (error) {
+    entry.status = 'queued';
+    await checkpoint(state, `verification failed ${channel.id}`);
+    throw error;
+  }
+  if (!stillActive) {
+    state.queue = state.queue.filter((item) => item !== entry);
+    await checkpoint(state, `expired ${channel.id}`);
+    return;
+  }
   let messageId: number;
   try {
     messageId = await sendPhoto(channel, image, caption, entry.offer.url);
