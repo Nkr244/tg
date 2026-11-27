@@ -1,1 +1,279 @@
-[]
+[
+  {
+    "key": "5e4bc10443a4c61ae242e3be5bf30f1ed6974a2a6538031d0e3066d95f5d4566",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3858",
+      "title": "A Tiny Sticker Tale (Mobile) Giveaway",
+      "description": "A Tiny Sticker Tale (Mobile version) is free until December 3 on the Epic Games Store App for iPhone, iPad, and Android.\r\n\r\nNote: May not be available in all regions.",
+      "category": "game",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/a-tiny-sticker-tale-mobile-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/6b085c2f77be3.jpg",
+      "startsAt": "2026-11-26T11:19:59.000Z",
+      "endsAt": "2026-12-03T00:00:00.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/a-tiny-sticker-tale-mobile-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "e0723e413f4971853f0c6a8f9171573d28e555af3559ade66def3f2e98a2dceb",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3852",
+      "title": "Contractor: The Clean Up Part 2 (Epic Games) Giveaway",
+      "description": "Score Contractor: The Clean Up Part 2 for free via Epic Games Store! Take control of a powerful loader and clear construction sites filled with rubble, broken concrete, and debris.",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "Epic Games Store"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/contractor-the-clean-up-part-2-epic-games-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/6afc554f06761.jpg",
+      "startsAt": "2026-11-17T08:23:27.000Z",
+      "endsAt": "2026-12-02T00:00:00.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/contractor-the-clean-up-part-2-epic-games-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "b4c24fc3e25dde10e66ba2d6508df2ce18f8b67201615ad0cb821df88ff2063c",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3346",
+      "title": "My Darkest Witch (IndieGala) Giveaway",
+      "description": "Score My Darkest Witch for free on IndieGala! My Darkest Witch is a 2d survival arena game with endless waves of enemies.",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "DRM-Free"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/my-darkest-witch-pc-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/69061997da81d.jpg",
+      "startsAt": "2026-10-30T13:33:46.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/my-darkest-witch-pc-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "c9718574aa1a392aa084af46304eb262be60011bc14e18b5aafcf652342d92f6",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3340",
+      "title": "ANCIENT EVIL (IndieGala) Giveaway",
+      "description": "Download ANCIENT EVIL for free via IndieGala! Ancient Evil is a 2d tactical RPG with puzzle elements. Don´t miss it!",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "DRM-Free"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/ancient-evil-pc-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/69024dade7c16.jpg",
+      "startsAt": "2026-10-26T11:04:23.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/ancient-evil-pc-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "75bfb3f4e71ba01f594b9fe390f344cb067e04302dc0a2a077a27cec7a69d3db",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3331",
+      "title": "Last Room (IndieGala) Giveaway",
+      "description": "Dive into a world of puzzles today! Download Last Room for free on IndieGala! Last Room is a 3d puzzle game with interactive environments, medieval mysteries and secret levels.",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "DRM-Free"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/last-room-pc-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/68f91bd81c328.jpg",
+      "startsAt": "2026-10-19T11:58:10.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/last-room-pc-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "8ed07aeebc432658da64e1935f13b976ebf5851dbe68b6548021c71784ef2d66",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3328",
+      "title": "Best Plumber (IndieGala) Giveaway",
+      "description": "Ever dreamed of being a plumber? Probably not... but now’s your chance! Grab Best Plumber for free on IndieGala and step into the boots of a young plumber!",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "DRM-Free"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/best-plumber-pc-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/68f40b259de93.jpg",
+      "startsAt": "2026-09-25T13:41:01.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/best-plumber-pc-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "6faefe381a5b676db0586b7c9c6632bc4cdf6dc2a730f73085a12b8d84e1b3a6",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3322",
+      "title": "Sausage Hunter (Indiegala) Giveaway",
+      "description": "The hunt for the magic sausage starts now! Download Sausage Hunter for free on IndieGala. Sausage Hunter is a 2D platformer with hand-drawn graphics and intriguing puzzles... plus a kitten and sausages, for some reason.",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "DRM-Free"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/sausage-hunter-pc-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/68eadb2d6f0c4.jpg",
+      "startsAt": "2026-09-19T09:15:50.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/sausage-hunter-pc-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "0f35c2ba9b63c8accea115c3556d2f1c532a81f57ec9ed017e07c145c3464ce7",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3324",
+      "title": "Battle Ram (IndieGala) Giveaway",
+      "description": "Become the battle lamb you were born to be! Battle Ram is free this week on IndieGala, download it now! Battle Ram is a 2d action-packed game with lambs and battling robots.",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "DRM-Free"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/battle-ram-pc-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/68efabd65f913.jpg",
+      "startsAt": "2026-09-02T09:51:31.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/battle-ram-pc-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "dc659fe11db629d61a3f6196cf314cc524dcfaedc3fca26d17898bcecd687dea",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3316",
+      "title": "Leaper (IndieGala) Giveaway",
+      "description": "Time to put your reflexes to the test! Download Leaper for free on IndieGala! Leaper is a 2d side-scrolling platformer with colorful pixel graphics and precise jumping mechanics. Check it out!",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "DRM-Free"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/leaper-pc-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/68e6513c31514.jpg",
+      "startsAt": "2026-08-26T07:55:48.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/leaper-pc-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "12dcd39818af158c4fedd9702c84c665ffab2b0aff396d14e6970936d301a0ac",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3446",
+      "title": "GigaBash (Stove) Giveaway",
+      "description": "Score GigaBash for free via Stove and claim your place as king among Titans! GigaBash is a multiplayer arena brawler with gigantic film-inspired kaiju and fully destructible environments.",
+      "category": "game",
+      "platforms": [
+        "PC"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/gigabash-pc-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/69567c4ee0fa3.jpg",
+      "startsAt": "2026-01-01T08:53:18.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/gigabash-pc-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "202f2610a55747aa1d9bdf2fd3c286cac2ac514754924c420dcba098a9797c9c",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3251",
+      "title": "Sharknado VR (Rift) Giveaway",
+      "description": "Ready to relive Sharknado? Grab Sharknado VR (Rift S, Rift) for free via Meta. Sharknado VR puts you in the middle of the action. Can you survive the flying sharks?",
+      "category": "game",
+      "platforms": [
+        "VR"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/sharknado-vr-rift-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/689aece93310e.jpg",
+      "startsAt": "2025-08-12T03:27:37.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/sharknado-vr-rift-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  },
+  {
+    "key": "6852a5a1e16644a51c0f48713fb237c768eae6c8bbc6f7a62582b1660247c075",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:2204",
+      "title": "Dual Chroma: Academy Carols (itch.io) Giveaway",
+      "description": "Grab Dual Chroma: Academy Carols for free on itch.io! Dual Chroma: Academy Carols is a slice-of-life Visual Novel. Check it out, If you are a fan of this type of game!",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "Itch.io",
+        "DRM-Free"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/dual-chroma-academy-carols-itch-io-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/63c6f67bb9c8b.jpg",
+      "startsAt": "2023-01-17T20:26:51.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/dual-chroma-academy-carols-itch-io-giveaway",
+      "fetchedAt": "2026-11-27T10:48:28.582Z"
+    },
+    "queuedAt": "2026-11-27T10:48:28.582Z",
+    "status": "queued"
+  }
+]
