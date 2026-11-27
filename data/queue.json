@@ -251,5 +251,82 @@
     },
     "queuedAt": "2026-11-27T15:00:48.378Z",
     "status": "queued"
+  },
+  {
+    "key": "4b9e36b69cd510e6e13db9d09c33dda953f861fcd7b03aba7d629c030abb137c",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:3860",
+      "title": "Dead Age 2 (GOG) Giveaway",
+      "description": "Download Dead Age 2 for free via GOG! Dead Age 2 is a fun indie survival RPG with rogue-like features, fast-paced turn-based combat and survival all in one.",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "GOG",
+        "DRM-Free"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/dead-age-2-gog-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/6b0969de22e37.jpg",
+      "startsAt": "2026-11-27T06:30:38.000Z",
+      "endsAt": "2026-11-30T14:40:09.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/dead-age-2-gog-giveaway",
+      "fetchedAt": "2026-11-27T18:00:22.312Z"
+    },
+    "queuedAt": "2026-11-27T18:00:22.312Z",
+    "status": "queued"
+  },
+  {
+    "key": "4f705f3988be6d2e8b04e10e039f793863bd764a8d79aeee6ea9ed1f89ac518e",
+    "channelId": "free-games",
+    "offer": {
+      "id": "github-ai:ollama/ollama",
+      "title": "Ollama",
+      "description": "Запускает языковые модели на вашем компьютере: можно общаться с ними и пробовать локальный AI без отправки запросов в облако. Полезно для экспериментов и работы с моделями; скорость зависит от оборудования.",
+      "summary": "Запускает языковые модели на вашем компьютере: можно общаться с ними и пробовать локальный AI без отправки запросов в облако. Полезно для экспериментов и работы с моделями; скорость зависит от оборудования.",
+      "category": "ai",
+      "offerType": "open_source",
+      "platforms": [
+        "Windows",
+        "macOS",
+        "Linux"
+      ],
+      "currentPrice": "0",
+      "url": "https://ollama.com/download",
+      "officialUrl": "https://ollama.com/download",
+      "sourceUrl": "https://github.com/ollama/ollama",
+      "source": "GitHub",
+      "conditions": "Лицензия: MIT. Для локальной работы нужна установка и подходящее оборудование. Облачные модели Ollama могут требовать оплаты.",
+      "popularity": 188304,
+      "fetchedAt": "2026-11-27T18:00:22.312Z"
+    },
+    "queuedAt": "2026-11-27T18:00:22.312Z",
+    "status": "queued"
+  },
+  {
+    "key": "8adcc37a4a1b83dd3b00f043f8d17ad62bcdf472f2ee03f2b2302e99addfe465",
+    "channelId": "free-games",
+    "offer": {
+      "id": "github-software:microsoft/powertoys",
+      "title": "PowerToys",
+      "description": "Бесплатный набор утилит Microsoft для Windows. Помогает удобно размещать окна, массово переименовывать файлы и переназначать клавиши. Полезен для повседневной работы и повторяющихся задач.",
+      "summary": "Бесплатный набор утилит Microsoft для Windows. Помогает удобно размещать окна, массово переименовывать файлы и переназначать клавиши. Полезен для повседневной работы и повторяющихся задач.",
+      "category": "opensource",
+      "offerType": "open_source",
+      "platforms": [
+        "Windows 10/11"
+      ],
+      "currentPrice": "0",
+      "url": "https://learn.microsoft.com/en-us/windows/powertoys/install",
+      "officialUrl": "https://learn.microsoft.com/en-us/windows/powertoys/install",
+      "sourceUrl": "https://github.com/microsoft/PowerToys",
+      "source": "GitHub",
+      "conditions": "Лицензия: MIT. Требуется Windows 10 версии 2004 или новее либо Windows 11.",
+      "popularity": 141476,
+      "fetchedAt": "2026-11-27T18:00:22.312Z"
+    },
+    "queuedAt": "2026-11-27T18:00:22.312Z",
+    "status": "queued"
   }
 ]
