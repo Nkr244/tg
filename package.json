@@ -11,6 +11,8 @@
     "build": "tsc -p tsconfig.json",
     "start": "node --env-file-if-exists=.env dist/index.js",
     "telegram:check": "node --env-file-if-exists=.env --import tsx src/telegram-check.ts",
+    "preview:sources": "node --env-file-if-exists=.env --import tsx src/preview-sources.ts",
+    "security:check": "node scripts/security-audit.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "eslint .",
@@ -18,6 +20,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "fast-xml-parser": "^5.12.1",
     "sharp": "^0.34.4"
   },
   "devDependencies": {

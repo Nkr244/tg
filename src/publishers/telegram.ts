@@ -59,6 +59,7 @@ export async function sendPhoto(
   caption: string,
   offerUrl: string,
   overrideChatId?: string,
+  buttonText = 'Забрать бесплатно',
 ): Promise<number> {
   const chatId = overrideChatId || process.env[channel.telegramChatIdEnv];
   if (!chatId) throw new TelegramError(true);
@@ -74,7 +75,7 @@ export async function sendPhoto(
   body.append(
     'reply_markup',
     JSON.stringify({
-      inline_keyboard: [[{ text: 'Забрать бесплатно', url: offerUrl }]],
+      inline_keyboard: [[{ text: buttonText, url: offerUrl }]],
     }),
   );
   return callTelegram('sendPhoto', body);

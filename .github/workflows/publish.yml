@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'dry = preview, live = real channel, test = test channel'
+        description: 'dry = GamerPower preview, sources = new-source preview, live = real channel, test = test channel'
         required: true
         default: dry
         type: choice
-        options: [dry, live, test]
+        options: [dry, sources, live, test]
 
 permissions:
   contents: write
@@ -49,6 +49,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - run: npm start
+      - name: Preview new sources without publishing
+        if: github.event_name == 'workflow_dispatch' && inputs.mode == 'sources'
+        run: npm run preview:sources
       - name: Upload dry run previews
         if: env.DRY_RUN == 'true' && env.TEST_PUBLISH != 'true'
         uses: actions/upload-artifact@v6

@@ -69,12 +69,14 @@ function titleLines(title: string): {
   return { lines, size: 40, step: 50, firstY: 275, badgeY: 464 };
 }
 
-function terminalArtwork(variant: number): string {
-  const mark = [
-    `<path d="M961 354h88v83h-88z M1005 354v83 M961 379h88 M973 342c-17-27 20-39 32 0 M1037 342c17-27-20-39-32 0" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round" stroke-linecap="square"/>`,
-    `<path d="M936 409l19-53q8-23 31-22h38q13 13 27 0h32q22 0 29 22l17 53q5 28-23 27l-39-25h-64l-39 25q-28 1-28-27z" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round"/><path d="M974 365v40 M954 385h40" stroke="${colors.yellow}" stroke-width="8"/><circle cx="1084" cy="370" r="7" fill="${colors.yellow}"/><circle cx="1105" cy="390" r="7" fill="${colors.yellow}"/>`,
-    `<path d="M955 420h140v-59h-140z M972 378h105 M985 391v18 M976 400h18" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round"/><circle cx="1050" cy="398" r="7" fill="${colors.yellow}"/><circle cx="1073" cy="398" r="7" fill="${colors.yellow}"/><path d="M973 347v-18h104v18" fill="none" stroke="${colors.yellow}" stroke-width="7"/>`,
-  ][variant];
+function terminalArtwork(variant: number, openSource = false): string {
+  const mark = openSource
+    ? `<text x="925" y="421" font-size="83" font-weight="900" fill="${colors.yellow}">&lt;/&gt;</text>`
+    : [
+        `<path d="M961 354h88v83h-88z M1005 354v83 M961 379h88 M973 342c-17-27 20-39 32 0 M1037 342c17-27-20-39-32 0" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round" stroke-linecap="square"/>`,
+        `<path d="M936 409l19-53q8-23 31-22h38q13 13 27 0h32q22 0 29 22l17 53q5 28-23 27l-39-25h-64l-39 25q-28 1-28-27z" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round"/><path d="M974 365v40 M954 385h40" stroke="${colors.yellow}" stroke-width="8"/><circle cx="1084" cy="370" r="7" fill="${colors.yellow}"/><circle cx="1105" cy="390" r="7" fill="${colors.yellow}"/>`,
+        `<path d="M955 420h140v-59h-140z M972 378h105 M985 391v18 M976 400h18" fill="none" stroke="${colors.yellow}" stroke-width="9" stroke-linejoin="round"/><circle cx="1050" cy="398" r="7" fill="${colors.yellow}"/><circle cx="1073" cy="398" r="7" fill="${colors.yellow}"/><path d="M973 347v-18h104v18" fill="none" stroke="${colors.yellow}" stroke-width="7"/>`,
+      ][variant];
   return `<g>
     <rect x="858" y="209" width="284" height="281" rx="18" fill="#06140F" stroke="${colors.green}" stroke-width="5"/>
     <path d="M860 256h280" stroke="${colors.green}" stroke-width="5"/>
@@ -110,6 +112,25 @@ export async function generateImage(
     '>_ БЕСПЛАТНЫЙ ДРОП',
     '>_ ЗАПУСК ХАЛЯВЫ',
   ][variant];
+  const kind =
+    offer.offerType === 'open_source'
+      ? 'OPEN SOURCE'
+      : offer.offerType === 'free_tier'
+        ? 'FREE TIER'
+        : offer.offerType === 'trial'
+          ? 'ПРОБНЫЙ ДОСТУП'
+          : offer.offerType === 'discount'
+            ? 'СКИДКА'
+            : offer.offerType === 'permanently_free'
+              ? 'ВСЕГДА БЕСПЛАТНО'
+              : 'БЕСПЛАТНО';
+  const badgeSize = kind.length > 15 ? 29 : kind.length > 10 ? 35 : 43;
+  const categoryLabel =
+    offer.category === 'ai'
+      ? 'AI / ИНСТРУМЕНТЫ'
+      : offer.category === 'opensource' || offer.category === 'software'
+        ? 'ПРОГРАММЫ / УТИЛИТЫ'
+        : 'ИГРЫ / РАЗДАЧИ';
   const date = offer.endsAt
     ? new Intl.DateTimeFormat('ru-RU', {
         timeZone: 'UTC',
@@ -142,17 +163,17 @@ export async function generateImage(
     <path d="M53 150h1094" stroke="${colors.green}" stroke-width="2" opacity=".8"/>
     <path d="M52 168h19 M81 168h19 M110 168h19 M139 168h19" stroke="${colors.yellow}" stroke-width="5"/>
     <g font-family="DejaVu Sans Mono, Consolas, monospace">
-      <text x="79" y="220" font-size="24" font-weight="700" fill="${colors.green}">${escapeXml(kicker!)}</text>
+      <text x="79" y="220" font-size="24" font-weight="700" fill="${colors.green}">${escapeXml(offer.category === 'game' ? kicker! : `>_ ${categoryLabel}`)}</text>
       ${titleSvg}
       <rect x="79" y="${title.badgeY}" width="445" height="85" rx="8" fill="${badge.fill}" stroke="${badge.stroke}" stroke-width="3"/>
-      <text x="102" y="${title.badgeY + 56}" font-size="43" font-weight="900" fill="${badge.text}">БЕСПЛАТНО</text>
-      <text x="545" y="${title.badgeY + 54}" font-size="27" fill="${colors.green}">&gt; ЗАБРАТЬ</text>
-      ${terminalArtwork(variant)}
+      <text x="102" y="${title.badgeY + 56}" font-size="${badgeSize}" font-weight="900" fill="${badge.text}">${escapeXml(kind)}</text>
+      <text x="545" y="${title.badgeY + 54}" font-size="27" fill="${colors.green}">&gt; ${offer.offerType === 'open_source' ? 'СМОТРЕТЬ' : 'ЗАБРАТЬ'}</text>
+      ${terminalArtwork(variant, offer.offerType === 'open_source')}
       <path d="M55 566h1090" stroke="${colors.green}" stroke-width="2" opacity=".7"/>
       <text x="82" y="600" font-size="16" fill="${colors.muted}">ПЛАТФОРМА</text>
       <text x="82" y="629" font-size="24" font-weight="700" fill="${colors.white}">${escapeXml(platform)}</text>
-      <text x="818" y="600" font-size="16" fill="${colors.muted}">${date ? 'ЗАБРАТЬ ДО' : 'СРОК АКЦИИ'}</text>
-      <text x="818" y="629" font-size="24" font-weight="700" fill="${colors.green}">${date ? escapeXml(date) : 'НЕ УКАЗАН'}</text>
+      <text x="818" y="600" font-size="16" fill="${colors.muted}">${offer.offerType === 'open_source' ? 'ТИП ДОСТУПА' : date ? 'ЗАБРАТЬ ДО' : 'СРОК АКЦИИ'}</text>
+      <text x="818" y="629" font-size="24" font-weight="700" fill="${colors.green}">${offer.offerType === 'open_source' ? 'ОТКРЫТЫЙ КОД' : date ? escapeXml(date) : 'НЕ УКАЗАН'}</text>
       ${previousPrice}
     </g>
     <rect width="1200" height="675" fill="url(#scan)" pointer-events="none"/>

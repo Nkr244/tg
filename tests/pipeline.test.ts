@@ -12,6 +12,9 @@ import { loadState, saveState } from '../src/services/storage.js';
 import { sendPhoto, TelegramError } from '../src/publishers/telegram.js';
 import { inspectBot } from '../src/telegram-check.js';
 import { main } from '../src/index.js';
+import { parseLootScraper } from '../src/sources/lootscraper.js';
+import { siteRecord, offerScore } from '../src/services/editorial.js';
+import { generateShortsBrief } from '../src/generators/shorts.js';
 import type {
   Channel,
   Offer,
@@ -76,6 +79,19 @@ afterEach(() => {
 });
 
 describe('source and validation', () => {
+  it('parses direct store links and deadlines, but rejects existing free-to-play games', () => {
+    const xml = `<feed><entry><id>https://feed.eikowagenknecht.com/lootscraper/100</id><title>Epic Games (Game, PC) - Bread and Fred</title><content><div><ul><li><b>Offer valid to:</b> 2026-12-03 16:00</li></ul></div></content><link href="https://store.epicgames.com/en-US/p/bread-and-fred"/><category term="type:GAME"/></entry><entry><id>https://feed.eikowagenknecht.com/lootscraper/101</id><title>Epic Games (Game, PC) - Always Free</title><content><div><ul><li><b>Offer valid to:</b> 2026-12-03 16:00</li></ul></div></content><link href="https://store.epicgames.com/en-US/p/always-free"/><category term="type:GAME"/><category term="Genre: Free To Play"/></entry></feed>`;
+    const parsed = parseLootScraper(xml, 'epic', now);
+    expect(parsed).toHaveLength(1);
+    expect(parsed[0]).toMatchObject({
+      title: 'Bread and Fred',
+      url: 'https://store.epicgames.com/en-US/p/bread-and-fred',
+      endsAt: '2026-12-03T00:00:00.000Z',
+    });
+    expect(
+      validOffer(parsed[0]!, { ...channel, categories: ['game'] }, now),
+    ).toBe(true);
+  });
   it('normalizes actual GamerPower fields without inventing a store price', () => {
     expect(offer.id).toBe('gamerpower:123');
     expect(offer.originalPrice).toBeUndefined();
@@ -133,6 +149,29 @@ describe('source and validation', () => {
 });
 
 describe('deduplication and schedule', () => {
+  it('blocks a recently published game across sources and ampersand spelling', () => {
+    const existing = {
+      ...offer,
+      title: 'Bread & Fred',
+      endsAt: '2026-12-03T00:00:00Z',
+      fetchedAt: now.toISOString(),
+    };
+    const candidate = {
+      ...offer,
+      id: 'lootscraper-epic:11063',
+      title: 'Bread and Fred',
+      url: 'https://store.epicgames.com/en-US/p/bread-and-fred',
+      endsAt: '2026-12-03T16:00:00Z',
+    };
+    expect(
+      isDuplicate(
+        candidate,
+        channel.id,
+        [{ ...sent(now.toISOString()), offer: existing }],
+        [],
+      ),
+    ).toBe(true);
+  });
   it('matches source ID and normalized title across sources', () => {
     expect(isDuplicate(offer, channel.id, [sent(now.toISOString())], [])).toBe(
       true,
@@ -185,6 +224,34 @@ describe('deduplication and schedule', () => {
 });
 
 describe('generation and state', () => {
+  it('labels open-source material honestly and prepares site and Shorts metadata', () => {
+    const project: Offer = {
+      ...offer,
+      id: 'github-ai:ollama/ollama',
+      title: 'ollama',
+      category: 'ai',
+      offerType: 'open_source',
+      source: 'GitHub',
+      sourceUrl: 'https://github.com/ollama/ollama',
+      url: 'https://github.com/ollama/ollama',
+      officialUrl: 'https://github.com/ollama/ollama',
+      summary: 'Локальный запуск моделей.',
+      conditions: 'Лицензия: MIT.',
+      endsAt: undefined,
+    };
+    const caption = generatePost(project, channel);
+    expect(caption).toContain('Открытый AI-инструмент');
+    expect(caption).not.toContain('Сейчас: бесплатно');
+    expect(siteRecord(project, now)).toMatchObject({
+      status: 'active',
+      category: 'ai',
+      offerType: 'open_source',
+    });
+    expect(offerScore(project, now)).toBeGreaterThan(0);
+    const shorts = generateShortsBrief(project);
+    expect(shorts).toContain('9:16');
+    expect(shorts).toContain('Без чужого геймплея');
+  });
   it('builds a Russian caption with source and no fictional price', () => {
     const text = generatePost(offer, channel);
     expect(text).toContain('Бесплатная');

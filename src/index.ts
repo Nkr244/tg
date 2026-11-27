@@ -9,6 +9,7 @@ import { canPublish, chooseNext } from './services/scheduler.js';
 import { checkpoint, loadState, type State } from './services/storage.js';
 import { generatePost } from './generators/post.js';
 import { generateImage } from './generators/image.js';
+import { generateShortsBrief } from './generators/shorts.js';
 import { sendPhoto, sendText, TelegramError } from './publishers/telegram.js';
 import type { Channel, Offer, QueueEntry } from './types/index.js';
 
@@ -43,7 +44,12 @@ async function channels(): Promise<Channel[]> {
 async function collect(
   channel: Channel,
   now: Date,
-): Promise<{ offers: Offer[]; successfulSources: Set<string> }> {
+  state: State,
+): Promise<{
+  offers: Offer[];
+  successfulSources: Set<string>;
+  failedSources: string[];
+}> {
   const results = await Promise.allSettled(
     channel.sources.map(async (id) => {
       const source = sources[id];
@@ -53,6 +59,7 @@ async function collect(
   );
   const offers: Offer[] = [];
   const successfulSources = new Set<string>();
+  const failedSources: string[] = [];
   for (const [index, result] of results.entries()) {
     if (result.status === 'fulfilled') {
       offers.push(...result.value);
@@ -60,24 +67,30 @@ async function collect(
       continue;
     }
     const message = `Source ${channel.sources[index]} failed: ${result.reason instanceof Error ? result.reason.message : 'unknown error'}`;
+    const sourceId = channel.sources[index]!;
+    failedSources.push(sourceId);
     console.error(message);
     process.exitCode = 1;
+    const marker = `source-error:${channel.id}:${sourceId}`;
+    const day = localDay(now, channel.timezone);
     if (
       process.env.DRY_RUN === 'false' &&
       process.env.TELEGRAM_ADMIN_ID &&
-      process.env.TELEGRAM_BOT_TOKEN
+      process.env.TELEGRAM_BOT_TOKEN &&
+      state.reports[marker] !== day
     ) {
       try {
         await sendText(
           process.env.TELEGRAM_ADMIN_ID,
           `Ошибка источника ${channel.id}: ${message}`,
         );
+        state.reports[marker] = day;
       } catch {
         console.error('Admin notification failed');
       }
     }
   }
-  return { offers, successfulSources };
+  return { offers, successfulSources, failedSources };
 }
 
 async function dryRun(
@@ -166,7 +179,18 @@ async function publish(
   }
   let messageId: number;
   try {
-    messageId = await sendPhoto(channel, image, caption, entry.offer.url);
+    messageId = await sendPhoto(
+      channel,
+      image,
+      caption,
+      entry.offer.url,
+      undefined,
+      entry.offer.offerType === 'open_source'
+        ? 'Открыть проект'
+        : entry.offer.offerType === 'free_tier'
+          ? 'Посмотреть тариф'
+          : 'Забрать бесплатно',
+    );
   } catch (error) {
     if (error instanceof TelegramError && error.definite) {
       entry.status = error.status === 429 ? 'queued' : 'blocked';
@@ -190,8 +214,34 @@ async function publish(
     sentAt: new Date().toISOString(),
   });
   state.queue = state.queue.filter((item) => item !== entry);
+  const published = state.published.at(-1)!;
+  const today = localDay(new Date(published.sentAt), channel.timezone);
+  const shortsCount = state.published.filter(
+    (item) =>
+      item.channelId === channel.id &&
+      item.shortsText &&
+      localDay(new Date(item.sentAt), channel.timezone) === today,
+  ).length;
+  const chatId = process.env[channel.telegramChatIdEnv];
+  const postUrl = chatId?.startsWith('@')
+    ? `https://t.me/${chatId.slice(1)}/${messageId}`
+    : undefined;
+  if (shortsCount < 2 && entry.offer.category !== 'dlc')
+    published.shortsText = generateShortsBrief(entry.offer, postUrl);
   await checkpoint(state, `published ${channel.id}`);
   console.log(`Published ${channel.id}: message ${messageId}`);
+  if (process.env.TELEGRAM_ADMIN_ID) {
+    try {
+      await sendText(
+        process.env.TELEGRAM_ADMIN_ID,
+        `Опубликовано: ${entry.offer.title}\n${postUrl ?? `Сообщение ${messageId}`}\n\n${published.shortsText ?? 'Shorts не рекомендован: дневной лимит.'}`,
+      );
+      published.notificationSentAt = new Date().toISOString();
+      await checkpoint(state, `notified ${channel.id}`);
+    } catch {
+      console.error('Admin notification failed after publication');
+    }
+  }
 }
 
 function localDay(now: Date, timezone: string): string {
@@ -210,6 +260,7 @@ async function dailyReport(
   channel: Channel,
   state: State,
   now: Date,
+  failedSources: string[],
 ): Promise<void> {
   const admin = process.env.TELEGRAM_ADMIN_ID;
   if (!admin || !process.env.TELEGRAM_BOT_TOKEN) return;
@@ -228,13 +279,27 @@ async function dailyReport(
       localDay(new Date(entry.sentAt), channel.timezone) === day,
   ).length;
   const pending = state.queue.filter(
-    (entry) => entry.channelId === channel.id,
+    (entry) => entry.channelId === channel.id && entry.status === 'queued',
   ).length;
+  const blocked = state.queue.filter(
+    (entry) =>
+      entry.channelId === channel.id &&
+      (entry.status === 'blocked' ||
+        entry.status === 'uncertain' ||
+        entry.status === 'sending'),
+  ).length;
+  const latest = state.published
+    .filter((entry) => entry.channelId === channel.id)
+    .at(-1);
+  const noOffers =
+    !pending &&
+    (!latest ||
+      now.getTime() - new Date(latest.sentAt).getTime() > 24 * 60 * 60_000);
   state.reports[channel.id] = day;
   await checkpoint(state, `report ${channel.id}`);
   await sendText(
     admin,
-    `Отчёт ${channel.name} за ${day}: опубликовано ${count}, в очереди ${pending}.`,
+    `Отчёт ${channel.name} за ${day}: опубликовано ${count}, в очереди ${pending}, требуют проверки ${blocked}. Ошибки источников: ${failedSources.length ? failedSources.join(', ') : 'нет'}.${noOffers ? ' Подходящих предложений более суток нет.' : ''}`,
   );
 }
 
@@ -253,7 +318,11 @@ export async function main(now: Date = new Date()): Promise<void> {
   )
     throw new Error('Telegram credentials are required for live mode');
   for (const channel of configured) {
-    const { offers, successfulSources } = await collect(channel, now);
+    const { offers, successfulSources, failedSources } = await collect(
+      channel,
+      now,
+      state,
+    );
     if (dry && !test) {
       await dryRun(channel, offers, state, now);
       continue;
@@ -302,7 +371,7 @@ export async function main(now: Date = new Date()): Promise<void> {
     });
     await checkpoint(state, `queue ${channel.id}`);
     await publish(channel, state, now, activeIds);
-    await dailyReport(channel, state, now);
+    await dailyReport(channel, state, now, failedSources);
   }
 }
 

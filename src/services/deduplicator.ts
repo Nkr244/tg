@@ -6,6 +6,7 @@ export function normalizedTitle(title: string): string {
     .toLowerCase()
     .replace(/\([^)]*(?:steam|epic games|gog|pc|mobile)[^)]*\)/gi, '')
     .replace(/\b(?:giveaway|free|key|раздача)\b/gi, '')
+    .replace(/&/g, ' and ')
     .normalize('NFKC')
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .trim();
@@ -36,8 +37,19 @@ export function isDuplicate(
   );
   return entries.some((entry) => {
     const other = entry.offer;
+    const endDistance =
+      offer.endsAt && other.endsAt
+        ? Math.abs(
+            new Date(offer.endsAt).getTime() - new Date(other.endsAt).getTime(),
+          )
+        : Infinity;
     const samePeriod =
+      endDistance <= 14 * 86400_000 ||
       (offer.endsAt?.slice(0, 10) ?? '') === (other.endsAt?.slice(0, 10) ?? '');
+    const recentlyPublished =
+      'sentAt' in entry &&
+      new Date(offer.fetchedAt).getTime() - new Date(entry.sentAt).getTime() <
+        90 * 86400_000;
     const samePlatform = offer.platforms.some((platform) =>
       other.platforms.some(
         (value) => value.toLowerCase() === platform.toLowerCase(),
@@ -46,7 +58,9 @@ export function isDuplicate(
     return (
       offer.id === other.id ||
       (samePeriod && new URL(other.url).pathname.replace(/\/$/, '') === url) ||
-      (samePeriod && samePlatform && normalizedTitle(other.title) === title)
+      ((samePeriod || recentlyPublished) &&
+        samePlatform &&
+        normalizedTitle(other.title) === title)
     );
   });
 }

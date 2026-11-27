@@ -10,7 +10,11 @@ export function validOffer(offer: Offer, channel: Channel, now: Date): boolean {
     offer.sourceUrl.length > 250
   )
     return false;
-  if (offer.endsAt && new Date(offer.endsAt).getTime() <= now.getTime())
+  if (
+    offer.endsAt &&
+    (!Number.isFinite(new Date(offer.endsAt).getTime()) ||
+      new Date(offer.endsAt).getTime() <= now.getTime())
+  )
     return false;
   if (offer.startsAt && new Date(offer.startsAt).getTime() > now.getTime())
     return false;
@@ -24,11 +28,23 @@ export function validOffer(offer: Offer, channel: Channel, now: Date): boolean {
   try {
     const url = new URL(offer.url);
     const source = new URL(offer.sourceUrl);
+    const hosts: Record<string, string[]> = {
+      gamerpower: ['www.gamerpower.com'],
+      'lootscraper-epic': ['store.epicgames.com'],
+      'lootscraper-gog': ['www.gog.com', 'gog.com'],
+      'lootscraper-steam': ['store.steampowered.com'],
+      'github-ai': ['github.com'],
+      'github-software': ['github.com'],
+    };
+    const prefix = offer.id.split(':')[0]!;
     return (
       url.protocol === 'https:' &&
       source.protocol === 'https:' &&
-      url.hostname === 'www.gamerpower.com' &&
-      source.hostname === 'www.gamerpower.com'
+      !!hosts[prefix]?.includes(url.hostname) &&
+      (prefix.startsWith('lootscraper-')
+        ? source.hostname === 'feed.eikowagenknecht.com'
+        : source.hostname === url.hostname) &&
+      (offer.offerType !== 'temporary_giveaway' || !!offer.endsAt)
     );
   } catch {
     return false;

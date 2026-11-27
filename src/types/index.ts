@@ -1,10 +1,28 @@
-export type Category = 'game' | 'dlc' | 'software';
+export type Category =
+  | 'game'
+  | 'dlc'
+  | 'software'
+  | 'ai'
+  | 'opensource'
+  | 'discounts'
+  | 'promo'
+  | 'digest';
+
+export type OfferType =
+  | 'temporary_giveaway'
+  | 'permanently_free'
+  | 'free_license'
+  | 'free_tier'
+  | 'open_source'
+  | 'discount'
+  | 'trial';
 
 export interface Offer {
   id: string;
   title: string;
   description?: string;
   category: Category;
+  offerType?: OfferType;
   platforms: string[];
   originalPrice?: string;
   currentPrice: string;
@@ -15,6 +33,13 @@ export interface Offer {
   source: string;
   sourceUrl: string;
   region?: string;
+  conditions?: string;
+  claimUrl?: string;
+  officialUrl?: string;
+  popularity?: number;
+  slug?: string;
+  seoTitle?: string;
+  summary?: string;
   fetchedAt: string;
 }
 
@@ -46,6 +71,8 @@ export interface PublishedEntry {
   offer: Offer;
   sentAt: string;
   messageId: number;
+  shortsText?: string;
+  notificationSentAt?: string;
 }
 
 export interface Source {
