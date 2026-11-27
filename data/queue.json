@@ -300,29 +300,5 @@
     },
     "queuedAt": "2026-11-27T13:54:15.116Z",
     "status": "queued"
-  },
-  {
-    "key": "92aeecf36f4b6e2755946b601a4e45e28f5ec159810ab51b895f1ee172d63bf3",
-    "channelId": "free-games",
-    "offer": {
-      "id": "gamerpower:3859",
-      "title": "Vertical Drop Heroes HD Steam Key Giveaway",
-      "description": "Claim your free Vertical Drop Heroes HD Steam key via Fanatical and keep this Steam game forever! Vertical Drop Heroes is a 2d procedural platformer RPG with roguelike elements. Don´t miss it!",
-      "category": "game",
-      "platforms": [
-        "PC",
-        "Steam"
-      ],
-      "currentPrice": "0",
-      "url": "https://www.gamerpower.com/vertical-drop-heroes-hd-steam-key-giveaway",
-      "imageUrl": "https://www.gamerpower.com/offers/1b/6b0967296e680.jpg",
-      "startsAt": "2026-11-27T06:19:05.000Z",
-      "endsAt": "2026-11-28T00:00:00.000Z",
-      "source": "GamerPower",
-      "sourceUrl": "https://www.gamerpower.com/vertical-drop-heroes-hd-steam-key-giveaway",
-      "fetchedAt": "2026-11-27T13:54:15.116Z"
-    },
-    "queuedAt": "2026-11-27T13:54:15.116Z",
-    "status": "sending"
   }
 ]
