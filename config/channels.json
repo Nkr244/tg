@@ -9,7 +9,7 @@
       "sources": ["gamerpower"],
       "categories": ["game"],
       "maxPostsPerDay": 5,
-      "minPostIntervalMinutes": 60,
+      "minPostIntervalMinutes": 180,
       "publishHours": { "from": "09:00", "to": "22:00" },
       "telegramChatIdEnv": "TELEGRAM_CHANNEL_ID"
     }

@@ -1,8 +1,6 @@
 name: Collect and publish
 
 on:
-  schedule:
-    - cron: '7,22,37,52 * * * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -30,9 +28,9 @@ jobs:
       TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
       TELEGRAM_ADMIN_ID: ${{ secrets.TELEGRAM_ADMIN_ID }}
       TEST_CHANNEL_ID: ${{ secrets.TEST_CHANNEL_ID }}
-      DRY_RUN: ${{ vars.ENABLE_PUBLISH == 'true' && (github.event_name == 'schedule' || inputs.mode == 'live') && 'false' || 'true' }}
+      DRY_RUN: ${{ vars.ENABLE_PUBLISH == 'true' && inputs.mode == 'live' && 'false' || 'true' }}
       TEST_PUBLISH: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'test' && 'true' || 'false' }}
-      STATE_SYNC_GIT: ${{ vars.ENABLE_PUBLISH == 'true' && (github.event_name == 'schedule' || inputs.mode == 'live') && 'true' || 'false' }}
+      STATE_SYNC_GIT: ${{ vars.ENABLE_PUBLISH == 'true' && inputs.mode == 'live' && 'true' || 'false' }}
     steps:
       - uses: actions/checkout@v6
         with:

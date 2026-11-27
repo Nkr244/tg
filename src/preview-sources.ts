@@ -20,7 +20,7 @@ const channel: Channel = {
   sources: [],
   categories: ['game', 'software', 'ai', 'opensource'],
   maxPostsPerDay: 5,
-  minPostIntervalMinutes: 60,
+  minPostIntervalMinutes: 180,
   publishHours: { from: '09:00', to: '22:00' },
   telegramChatIdEnv: 'TELEGRAM_CHANNEL_ID',
 };

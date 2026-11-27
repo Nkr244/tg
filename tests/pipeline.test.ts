@@ -33,7 +33,7 @@ const channel: Channel = {
   sources: ['gamerpower'],
   categories: ['game', 'dlc'],
   maxPostsPerDay: 5,
-  minPostIntervalMinutes: 60,
+  minPostIntervalMinutes: 180,
   publishHours: { from: '09:00', to: '22:00' },
   telegramChatIdEnv: 'TELEGRAM_CHANNEL_ID',
 };
@@ -207,6 +207,20 @@ describe('deduplication and schedule', () => {
     expect(canPublish(channel, [sent('2026-11-27T09:30:00Z')], now)).toBe(
       false,
     );
+    expect(
+      canPublish(
+        channel,
+        [sent('2026-11-27T09:30:00Z')],
+        new Date('2026-11-27T12:29:00Z'),
+      ),
+    ).toBe(false);
+    expect(
+      canPublish(
+        channel,
+        [sent('2026-11-27T09:30:00Z')],
+        new Date('2026-11-27T12:30:00Z'),
+      ),
+    ).toBe(true);
     expect(
       canPublish(
         channel,
