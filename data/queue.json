@@ -24,30 +24,6 @@
     "status": "queued"
   },
   {
-    "key": "e0723e413f4971853f0c6a8f9171573d28e555af3559ade66def3f2e98a2dceb",
-    "channelId": "free-games",
-    "offer": {
-      "id": "gamerpower:3852",
-      "title": "Contractor: The Clean Up Part 2 (Epic Games) Giveaway",
-      "description": "Score Contractor: The Clean Up Part 2 for free via Epic Games Store! Take control of a powerful loader and clear construction sites filled with rubble, broken concrete, and debris.",
-      "category": "game",
-      "platforms": [
-        "PC",
-        "Epic Games Store"
-      ],
-      "currentPrice": "0",
-      "url": "https://www.gamerpower.com/contractor-the-clean-up-part-2-epic-games-giveaway",
-      "imageUrl": "https://www.gamerpower.com/offers/1b/6afc554f06761.jpg",
-      "startsAt": "2026-11-17T08:23:27.000Z",
-      "endsAt": "2026-12-02T00:00:00.000Z",
-      "source": "GamerPower",
-      "sourceUrl": "https://www.gamerpower.com/contractor-the-clean-up-part-2-epic-games-giveaway",
-      "fetchedAt": "2026-11-27T10:48:28.582Z"
-    },
-    "queuedAt": "2026-11-27T10:48:28.582Z",
-    "status": "sending"
-  },
-  {
     "key": "b4c24fc3e25dde10e66ba2d6508df2ce18f8b67201615ad0cb821df88ff2063c",
     "channelId": "free-games",
     "offer": {
