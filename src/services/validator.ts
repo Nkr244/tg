@@ -33,10 +33,28 @@ export function validOffer(offer: Offer, channel: Channel, now: Date): boolean {
       'lootscraper-epic': ['store.epicgames.com'],
       'lootscraper-gog': ['www.gog.com', 'gog.com'],
       'lootscraper-steam': ['store.steampowered.com'],
-      'github-ai': ['github.com'],
-      'github-software': ['github.com'],
     };
     const prefix = offer.id.split(':')[0]!;
+    const curatedUrls: Record<string, { claim: string; source: string }> = {
+      'github-ai:ollama/ollama': {
+        claim: 'https://ollama.com/download',
+        source: 'https://github.com/ollama/ollama',
+      },
+      'github-software:localsend/localsend': {
+        claim: 'https://localsend.org/download',
+        source: 'https://github.com/localsend/localsend',
+      },
+      'github-software:microsoft/powertoys': {
+        claim: 'https://learn.microsoft.com/en-us/windows/powertoys/install',
+        source: 'https://github.com/microsoft/PowerToys',
+      },
+    };
+    if (prefix === 'github-ai' || prefix === 'github-software')
+      return (
+        offer.offerType === 'open_source' &&
+        url.href === curatedUrls[offer.id]?.claim &&
+        source.href === curatedUrls[offer.id]?.source
+      );
     return (
       url.protocol === 'https:' &&
       source.protocol === 'https:' &&

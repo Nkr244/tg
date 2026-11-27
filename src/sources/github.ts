@@ -4,33 +4,47 @@ import { fetchWithRetry } from '../utils/http.js';
 interface CuratedRepo {
   path: string;
   category: Category;
+  title: string;
+  officialUrl: string;
+  platforms: string[];
   summary: string;
+  conditions?: string;
 }
 const curated: Record<string, CuratedRepo[]> = {
   'github-ai': [
     {
       path: 'ollama/ollama',
       category: 'ai',
+      title: 'Ollama',
+      officialUrl: 'https://ollama.com/download',
+      platforms: ['Windows', 'macOS', 'Linux'],
       summary:
-        'Локальный запуск языковых моделей. Для работы нужна установка и подходящее оборудование.',
-    },
-    {
-      path: 'open-webui/open-webui',
-      category: 'ai',
-      summary:
-        'Веб-интерфейс для работы с локальными и внешними моделями. Часть подключаемых сервисов может быть платной.',
+        'Запускает языковые модели на вашем компьютере: можно общаться с ними и пробовать локальный AI без отправки запросов в облако. Полезно для экспериментов и работы с моделями; скорость зависит от оборудования.',
+      conditions:
+        'Для локальной работы нужна установка и подходящее оборудование. Облачные модели Ollama могут требовать оплаты.',
     },
   ],
   'github-software': [
     {
       path: 'localsend/localsend',
       category: 'opensource',
-      summary: 'Передача файлов между устройствами по локальной сети.',
+      title: 'LocalSend',
+      officialUrl: 'https://localsend.org/download',
+      platforms: ['Windows', 'macOS', 'Linux', 'Android', 'iOS'],
+      summary:
+        'Передаёт файлы и текст между устройствами в одной локальной сети без облака и регистрации. Полезно, когда нужно быстро отправить фото или документ с телефона на компьютер либо на другое устройство рядом.',
+      conditions: 'Устройства должны находиться в одной локальной сети.',
     },
     {
       path: 'microsoft/PowerToys',
       category: 'opensource',
-      summary: 'Набор утилит для настройки и повышения удобства Windows.',
+      title: 'PowerToys',
+      officialUrl:
+        'https://learn.microsoft.com/en-us/windows/powertoys/install',
+      platforms: ['Windows 10/11'],
+      summary:
+        'Бесплатный набор утилит Microsoft для Windows. Помогает удобно размещать окна, массово переименовывать файлы и переназначать клавиши. Полезен для повседневной работы и повторяющихся задач.',
+      conditions: 'Требуется Windows 10 версии 2004 или новее либо Windows 11.',
     },
   ],
 };
@@ -58,18 +72,18 @@ function normalize(
     return;
   return {
     id: `${sourceId}:${path.toLowerCase()}`,
-    title: typeof repo.name === 'string' ? repo.name : path.split('/')[1]!,
+    title: item.title,
     description: item.summary,
     summary: item.summary,
     category: item.category,
     offerType: 'open_source',
-    platforms: item.category === 'ai' ? ['ПК', 'локальный запуск'] : ['ПК'],
+    platforms: item.platforms,
     currentPrice: '0',
-    url: repo.html_url,
-    officialUrl: repo.html_url,
+    url: item.officialUrl,
+    officialUrl: item.officialUrl,
     sourceUrl: repo.html_url,
     source: 'GitHub',
-    conditions: `Лицензия: ${license.spdx_id}. Требуется самостоятельная установка.`,
+    conditions: `Лицензия: ${license.spdx_id}. ${item.conditions ?? ''}`.trim(),
     popularity:
       typeof repo.stargazers_count === 'number'
         ? repo.stargazers_count
@@ -118,7 +132,14 @@ export function githubCurated(id: keyof typeof curated): Source {
       const item = curated[id]!.find(
         (candidate) => `${id}:${candidate.path.toLowerCase()}` === offer.id,
       );
-      return !!item && !!(await getRepo(item, id, now));
+      if (!item) return false;
+      const current = await getRepo(item, id, now);
+      return (
+        current?.id === offer.id &&
+        current.title === offer.title &&
+        current.url === offer.url &&
+        current.platforms.join(',') === offer.platforms.join(',')
+      );
     },
   };
 }

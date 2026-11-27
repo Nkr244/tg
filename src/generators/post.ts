@@ -46,7 +46,7 @@ export function generatePost(offer: Offer, channel: Channel): string {
     lines.push(`💰 Обычная цена: ${escapeHtml(offer.originalPrice)}`);
   if (offer.offerType === 'open_source')
     lines.push(
-      '🔓 Открытый исходный код; условия использования зависят от лицензии.',
+      '🔓 Бесплатный проект с открытым кодом; срока акции нет. Условия использования определяет лицензия.',
     );
   else if (offer.offerType === 'free_tier')
     lines.push('🆓 Доступен бесплатный тариф; лимиты смотрите на сайте.');
@@ -64,7 +64,8 @@ export function generatePost(offer: Offer, channel: Channel): string {
   if (offer.conditions)
     lines.push(`ℹ️ ${escapeHtml(offer.conditions.slice(0, 180))}`);
   if (offer.region) lines.push(`🌍 Регион: ${escapeHtml(offer.region)}`);
-  else lines.push('🌍 Доступность по регионам уточняйте на странице акции.');
+  else if (offer.offerType !== 'open_source')
+    lines.push('🌍 Доступность по регионам уточняйте на странице акции.');
   lines.push(
     '',
     `Источник: <a href="${escapeHtml(offer.sourceUrl)}">${escapeHtml(offer.source)}</a>`,

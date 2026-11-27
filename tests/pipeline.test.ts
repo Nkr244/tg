@@ -13,6 +13,7 @@ import { sendPhoto, TelegramError } from '../src/publishers/telegram.js';
 import { inspectBot } from '../src/telegram-check.js';
 import { main } from '../src/index.js';
 import { parseLootScraper } from '../src/sources/lootscraper.js';
+import { githubCurated } from '../src/sources/github.js';
 import { siteRecord, offerScore } from '../src/services/editorial.js';
 import { generateShortsBrief } from '../src/generators/shorts.js';
 import { generateWeeklyDigest } from '../src/generators/digest.js';
@@ -80,6 +81,82 @@ afterEach(() => {
 });
 
 describe('source and validation', () => {
+  it('uses verified product names, platforms and official claim links', async () => {
+    const repos = [
+      'ollama/ollama',
+      'localsend/localsend',
+      'microsoft/PowerToys',
+    ];
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((input: string) => {
+        const path = input.replace('https://api.github.com/repos/', '');
+        if (!repos.includes(path)) throw new Error('Unexpected repository');
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({
+              full_name: path,
+              html_url: `https://github.com/${path}`,
+              archived: false,
+              disabled: false,
+              license: { spdx_id: 'MIT' },
+              pushed_at: now.toISOString(),
+              stargazers_count: 100,
+            }),
+          ),
+        );
+      }),
+    );
+    const projects = [
+      ...(await githubCurated('github-ai').collect(now)),
+      ...(await githubCurated('github-software').collect(now)),
+    ];
+    expect(projects.map((project) => project.title)).toEqual([
+      'Ollama',
+      'LocalSend',
+      'PowerToys',
+    ]);
+    expect(projects.map((project) => project.platforms)).toEqual([
+      ['Windows', 'macOS', 'Linux'],
+      ['Windows', 'macOS', 'Linux', 'Android', 'iOS'],
+      ['Windows 10/11'],
+    ]);
+    expect(projects.map((project) => project.url)).toEqual([
+      'https://ollama.com/download',
+      'https://localsend.org/download',
+      'https://learn.microsoft.com/en-us/windows/powertoys/install',
+    ]);
+    const productChannel = {
+      ...channel,
+      categories: ['ai', 'opensource'] as Channel['categories'],
+    };
+    for (const project of projects) {
+      expect(validOffer(project, productChannel, now)).toBe(true);
+      const caption = generatePost(project, productChannel);
+      expect(caption).toContain('срока акции нет');
+      expect(caption).toContain(project.title);
+      expect(caption).toContain(project.platforms.join(', '));
+      expect(caption).not.toContain('Обычная цена');
+      expect(caption).not.toContain('Сейчас: бесплатно');
+      expect(caption.length).toBeLessThanOrEqual(1000);
+      expect(
+        validOffer(
+          { ...project, url: 'https://example.org/download' },
+          productChannel,
+          now,
+        ),
+      ).toBe(false);
+    }
+    expect(projects[0]!.summary).toContain('языковые модели');
+    expect(projects[1]!.summary).toContain('локальной сети');
+    expect(projects[2]!.summary).toContain('переименовывать');
+    expect(
+      await githubCurated('github-software').verify!(
+        { ...projects[2]!, url: 'https://example.org/download' },
+        now,
+      ),
+    ).toBe(false);
+  });
   it('parses direct store links and deadlines, but rejects existing free-to-play games', () => {
     const xml = `<feed><entry><id>https://feed.eikowagenknecht.com/lootscraper/100</id><title>Epic Games (Game, PC) - Bread and Fred</title><content><div><ul><li><b>Offer valid to:</b> 2026-12-03 16:00</li></ul></div></content><link href="https://store.epicgames.com/en-US/p/bread-and-fred"/><category term="type:GAME"/></entry><entry><id>https://feed.eikowagenknecht.com/lootscraper/101</id><title>Epic Games (Game, PC) - Always Free</title><content><div><ul><li><b>Offer valid to:</b> 2026-12-03 16:00</li></ul></div></content><link href="https://store.epicgames.com/en-US/p/always-free"/><category term="type:GAME"/><category term="Genre: Free To Play"/></entry></feed>`;
     const parsed = parseLootScraper(xml, 'epic', now);
@@ -427,7 +504,7 @@ describe('DRY_RUN end to end', () => {
       expect(files.some((file) => file.endsWith('.jpg'))).toBe(true);
       expect(files.some((file) => file.endsWith('.txt'))).toBe(true);
       expect((await loadState()).published).toEqual([]);
-      expect(sourceFetch).toHaveBeenCalledTimes(2);
+      expect(sourceFetch).toHaveBeenCalledTimes(5);
     } finally {
       await rm(dir, { recursive: true, force: true });
     }
@@ -455,6 +532,10 @@ describe('queue and publication state', () => {
         return Promise.resolve(new Response(JSON.stringify([current])));
       if (url.includes('/api/giveaway?'))
         return Promise.resolve(new Response(JSON.stringify(current)));
+      if (url.includes('api.github.com/repos/'))
+        return Promise.resolve(
+          new Response(JSON.stringify({ archived: true })),
+        );
       if (url.includes('/sendPhoto'))
         return Promise.resolve(
           new Response(

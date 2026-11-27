@@ -139,7 +139,11 @@ export async function generateImage(
         year: 'numeric',
       }).format(new Date(offer.endsAt))
     : undefined;
-  const platform = offer.platforms.join(' · ').slice(0, 28);
+  const platformList = offer.platforms.join(' · ');
+  const platform =
+    platformList.length <= 28
+      ? platformList
+      : `${offer.platforms.slice(0, 3).join(' · ')} +${offer.platforms.length - 3}`;
   const brand = escapeXml(channel.name);
   const previousPrice = offer.originalPrice
     ? `<text x="88" y="624" font-size="19" fill="${colors.muted}">БЫЛО: ${escapeXml(offer.originalPrice)}</text>`
