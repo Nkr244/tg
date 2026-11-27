@@ -1,0 +1,8 @@
+node_modules/
+dist/
+dry-run/
+.env*
+!.env.example
+*.log
+*.tmp
+coverage/

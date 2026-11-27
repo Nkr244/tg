@@ -1,0 +1,17 @@
+{
+  "channels": [
+    {
+      "id": "free-games",
+      "enabled": true,
+      "name": "Халява.exe",
+      "language": "ru",
+      "timezone": "Europe/Moscow",
+      "sources": ["gamerpower"],
+      "categories": ["game", "dlc", "software"],
+      "maxPostsPerDay": 5,
+      "minPostIntervalMinutes": 60,
+      "publishHours": { "from": "09:00", "to": "22:00" },
+      "telegramChatIdEnv": "TELEGRAM_CHANNEL_ID"
+    }
+  ]
+}

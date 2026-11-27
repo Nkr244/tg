@@ -1,0 +1,57 @@
+name: Collect and publish
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'dry = preview, live = real channel, test = test channel'
+        required: true
+        default: dry
+        type: choice
+        options: [dry, live, test]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: telegram-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+      TELEGRAM_ADMIN_ID: ${{ secrets.TELEGRAM_ADMIN_ID }}
+      TEST_CHANNEL_ID: ${{ secrets.TEST_CHANNEL_ID }}
+      DRY_RUN: ${{ vars.ENABLE_PUBLISH == 'true' && (github.event_name == 'schedule' || inputs.mode == 'live') && 'false' || 'true' }}
+      TEST_PUBLISH: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'test' && 'true' || 'false' }}
+      STATE_SYNC_GIT: ${{ vars.ENABLE_PUBLISH == 'true' && (github.event_name == 'schedule' || inputs.mode == 'live') && 'true' || 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - name: Configure state commits
+        if: env.STATE_SYNC_GIT == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - run: npm start
+      - name: Upload dry run previews
+        if: env.DRY_RUN == 'true' && env.TEST_PUBLISH != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-${{ github.run_id }}
+          path: dry-run/
+          if-no-files-found: ignore
+          retention-days: 1
