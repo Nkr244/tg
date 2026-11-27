@@ -8,6 +8,7 @@ import { validOffer } from './services/validator.js';
 import { generatePost } from './generators/post.js';
 import { generateImage } from './generators/image.js';
 import { generateShortsBrief } from './generators/shorts.js';
+import { generateWeeklyDigest } from './generators/digest.js';
 import type { Channel, Offer } from './types/index.js';
 
 const channel: Channel = {
@@ -55,6 +56,14 @@ export async function previewSources(now = new Date()): Promise<void> {
   const dir =
     process.env.PREVIEW_DIR ?? join(process.cwd(), 'dry-run', 'new-sources');
   await mkdir(dir, { recursive: true });
+  const digest = generateWeeklyDigest(
+    state.published,
+    channel.id,
+    '@halyava_exe_hub',
+    now,
+  );
+  if (digest) await writeFile(join(dir, 'weekly-digest.txt'), digest + '\n');
+  else await unlink(join(dir, 'weekly-digest.txt')).catch(() => undefined);
   for (const name of await readdir(dir))
     if (/^[a-f0-9]{64}\.(?:jpg|txt|shorts\.txt|json)$/.test(name))
       await unlink(join(dir, name));

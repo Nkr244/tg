@@ -15,6 +15,7 @@ import { main } from '../src/index.js';
 import { parseLootScraper } from '../src/sources/lootscraper.js';
 import { siteRecord, offerScore } from '../src/services/editorial.js';
 import { generateShortsBrief } from '../src/generators/shorts.js';
+import { generateWeeklyDigest } from '../src/generators/digest.js';
 import type {
   Channel,
   Offer,
@@ -251,6 +252,19 @@ describe('generation and state', () => {
     const shorts = generateShortsBrief(project);
     expect(shorts).toContain('9:16');
     expect(shorts).toContain('Без чужого геймплея');
+  });
+  it('creates a weekly digest only from recently published posts', () => {
+    const text = generateWeeklyDigest(
+      [sent(now.toISOString()), sent('2026-11-10T10:00:00Z')],
+      channel.id,
+      '@halyava_exe_hub',
+      now,
+    );
+    expect(text).toContain('https://t.me/halyava_exe_hub/1');
+    expect(text?.match(/https:\/\/t\.me/g)).toHaveLength(1);
+    expect(
+      generateWeeklyDigest([], channel.id, '@halyava_exe_hub', now),
+    ).toBeUndefined();
   });
   it('builds a Russian caption with source and no fictional price', () => {
     const text = generatePost(offer, channel);

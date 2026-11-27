@@ -13,7 +13,8 @@ export function generateShortsBrief(offer: Offer, postUrl?: string): string {
           : offer.offerType === 'discount'
             ? 'действует скидка'
             : 'можно забрать бесплатно';
-  const voice = `${title}: ${fact}. Подробности и ссылка — в Халява.exe.`;
+  const spokenTitle = title.split(/\s+/).slice(0, 8).join(' ');
+  const voice = `${spokenTitle}${spokenTitle === title ? '' : '…'}: ${fact}. Ссылка — в Халява.exe.`;
   const end = offer.endsAt
     ? `Срок по источнику: ${offer.endsAt.slice(0, 10)}; точное время проверьте на странице акции.`
     : 'Срок окончания не указан.';
