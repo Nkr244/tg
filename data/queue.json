@@ -253,31 +253,6 @@
     "status": "queued"
   },
   {
-    "key": "4b9e36b69cd510e6e13db9d09c33dda953f861fcd7b03aba7d629c030abb137c",
-    "channelId": "free-games",
-    "offer": {
-      "id": "gamerpower:3860",
-      "title": "Dead Age 2 (GOG) Giveaway",
-      "description": "Download Dead Age 2 for free via GOG! Dead Age 2 is a fun indie survival RPG with rogue-like features, fast-paced turn-based combat and survival all in one.",
-      "category": "game",
-      "platforms": [
-        "PC",
-        "GOG",
-        "DRM-Free"
-      ],
-      "currentPrice": "0",
-      "url": "https://www.gamerpower.com/dead-age-2-gog-giveaway",
-      "imageUrl": "https://www.gamerpower.com/offers/1b/6b0969de22e37.jpg",
-      "startsAt": "2026-11-27T06:30:38.000Z",
-      "endsAt": "2026-11-30T14:40:09.000Z",
-      "source": "GamerPower",
-      "sourceUrl": "https://www.gamerpower.com/dead-age-2-gog-giveaway",
-      "fetchedAt": "2026-11-27T18:00:22.312Z"
-    },
-    "queuedAt": "2026-11-27T18:00:22.312Z",
-    "status": "sending"
-  },
-  {
     "key": "4f705f3988be6d2e8b04e10e039f793863bd764a8d79aeee6ea9ed1f89ac518e",
     "channelId": "free-games",
     "offer": {
