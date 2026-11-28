@@ -275,7 +275,7 @@
       "fetchedAt": "2026-11-27T18:00:22.312Z"
     },
     "queuedAt": "2026-11-27T18:00:22.312Z",
-    "status": "queued"
+    "status": "sending"
   },
   {
     "key": "4f705f3988be6d2e8b04e10e039f793863bd764a8d79aeee6ea9ed1f89ac518e",
