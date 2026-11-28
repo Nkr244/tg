@@ -1,0 +1,27 @@
+export type PublicOffer = {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  offerType: string;
+  status: string;
+  summary: string;
+  description: string;
+  cover: string;
+  platforms: string[];
+  os: string[];
+  originalPrice?: string;
+  currentPrice: string;
+  endsAt?: string;
+  publishedAt: string;
+  region?: string;
+  conditions?: string;
+  source: string;
+  sourceUrl: string;
+  officialUrl?: string;
+  messageId: number;
+  telegramUrl: string;
+  seoTitle: string;
+  seoDescription: string;
+  lastCheckedAt?: string;
+};

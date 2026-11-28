@@ -1,0 +1,9 @@
+.nuxt/
+.output/
+app/data/catalog.json
+node_modules/
+public/covers/
+public/catalog.json
+public/sitemap.xml
+public/robots.txt
+package-lock.json

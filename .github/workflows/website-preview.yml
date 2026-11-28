@@ -1,0 +1,59 @@
+name: Website dev preview
+
+on:
+  push:
+    branches: [dev]
+    paths:
+      - 'website/**'
+      - '.github/workflows/website-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-preview:
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Read current confirmed history from main
+        env:
+          PUBLISHED_FILE: ${{ runner.temp }}/published.json
+        run: |
+          git fetch --depth=1 origin main
+          git show FETCH_HEAD:data/published.json > "$PUBLISHED_FILE"
+      - run: npm ci --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
+        working-directory: website
+      - name: Export public catalog and covers
+        env:
+          PUBLISHED_FILE: ${{ runner.temp }}/published.json
+        run: node --import tsx website/scripts/export.ts
+      - run: npm run typecheck
+        working-directory: website
+      - run: npm test
+        working-directory: website
+      - run: npm run lint
+        working-directory: website
+      - run: npm run format:check
+        working-directory: website
+      - run: npm run build
+        working-directory: website
+      - run: npx playwright install --with-deps chromium
+        working-directory: website
+      - run: npx playwright test
+        working-directory: website
+      - name: Upload dev build artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: website-dev-preview-${{ github.run_id }}
+          path: |
+            website/.output/public/
+            website/screenshots/
+          retention-days: 7

@@ -14,7 +14,7 @@
     "preview:sources": "node --env-file-if-exists=.env --import tsx src/preview-sources.ts",
     "security:check": "node scripts/security-audit.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run tests/pipeline.test.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
