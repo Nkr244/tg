@@ -376,28 +376,5 @@
     },
     "queuedAt": "2026-11-28T00:00:18.824Z",
     "status": "queued"
-  },
-  {
-    "key": "0b4977fd73239d96185e23502a5e032491639f8031af61edb11ff2535f69cfb2",
-    "channelId": "free-games",
-    "offer": {
-      "id": "gamerpower:2109",
-      "title": "Tim-Tim 2: The Almighty Gnome (itch.io) Giveaway",
-      "description": "Score Tim-Tim 2: The Almighty Gnome for free on itch.io! Tim-Tim 2: The Almighty Gnome is a 2d adventure game with over 100 maps to explore.",
-      "category": "game",
-      "platforms": [
-        "PC"
-      ],
-      "currentPrice": "0",
-      "url": "https://www.gamerpower.com/tim-tim-2-the-almighty-gnome-itch-io-giveaway",
-      "imageUrl": "https://www.gamerpower.com/offers/1b/63a7d58806279.jpg",
-      "startsAt": "2026-07-02T09:13:34.000Z",
-      "endsAt": "2026-12-02T00:00:00.000Z",
-      "source": "GamerPower",
-      "sourceUrl": "https://www.gamerpower.com/tim-tim-2-the-almighty-gnome-itch-io-giveaway",
-      "fetchedAt": "2026-11-28T00:00:18.824Z"
-    },
-    "queuedAt": "2026-11-28T00:00:18.824Z",
-    "status": "sending"
   }
 ]
