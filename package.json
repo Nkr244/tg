@@ -13,6 +13,7 @@
     "telegram:check": "node --env-file-if-exists=.env --import tsx src/telegram-check.ts",
     "preview:sources": "node --env-file-if-exists=.env --import tsx src/preview-sources.ts",
     "security:check": "node scripts/security-audit.mjs",
+    "website:admin": "node website/scripts/admin-server.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run tests/pipeline.test.ts",
     "lint": "eslint .",

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/admin.css" />
+    <title>Админка · Халява.exe</title>
+    <script src="/admin.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Перейти к данным</a>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">&gt;_</span
+          ><span
+            >Халява<span class="green">.exe</span
+            ><small>CONTROL PANEL</small></span
+          >
+        </div>
+        <div class="top-actions">
+          <span class="local-badge">● ЛОКАЛЬНЫЙ ДОСТУП</span
+          ><button id="refresh" type="button">Обновить данные ↻</button>
+        </div>
+      </div>
+    </header>
+    <main id="content" class="container">
+      <div class="intro">
+        <div>
+          <div class="eyebrow">// СИСТЕМА / ОБЗОР</div>
+          <h1>Панель публикаций</h1>
+          <p>
+            Подтверждённые посты и текущая очередь Telegram-бота. Данные
+            доступны только на этом компьютере.
+          </p>
+        </div>
+        <div id="updated" class="updated">Загрузка…</div>
+      </div>
+      <section class="stats" aria-label="Сводка">
+        <div class="stat">
+          <span>ОПУБЛИКОВАНО</span><strong id="stat-published">—</strong>
+        </div>
+        <div class="stat">
+          <span>АКТУАЛЬНО</span><strong id="stat-active">—</strong>
+        </div>
+        <div class="stat">
+          <span>ЗАВЕРШЕНО</span><strong id="stat-ended">—</strong>
+        </div>
+        <div class="stat">
+          <span>В ОЧЕРЕДИ</span><strong id="stat-queued">—</strong>
+        </div>
+        <div class="stat attention">
+          <span>ТРЕБУЕТ ПРОВЕРКИ</span><strong id="stat-attention">—</strong>
+        </div>
+      </section>
+      <div class="workspace">
+        <section class="list-panel" aria-label="Список материалов">
+          <div class="list-head">
+            <div class="tabs" role="tablist" aria-label="Тип данных">
+              <button
+                id="tab-published"
+                role="tab"
+                aria-selected="true"
+                type="button"
+              >
+                Публикации</button
+              ><button
+                id="tab-queue"
+                role="tab"
+                aria-selected="false"
+                type="button"
+              >
+                Очередь
+              </button>
+            </div>
+            <span id="count" class="count"></span>
+          </div>
+          <div class="filters">
+            <label
+              ><span class="sr-only">Поиск</span
+              ><input
+                id="search"
+                type="search"
+                placeholder="Поиск по названию, источнику, ID…" /></label
+            ><label
+              ><span class="sr-only">Фильтр статуса</span
+              ><select id="status-filter">
+                <option value="">Все статусы</option>
+              </select></label
+            >
+          </div>
+          <div id="items" class="items" aria-live="polite"></div>
+        </section>
+        <aside id="details" class="details" aria-label="Детали материала">
+          <div class="detail-empty">
+            <span aria-hidden="true">⌕</span>
+            <h2>Выберите материал</h2>
+            <p>Здесь появятся его статус, источник и даты.</p>
+          </div>
+        </aside>
+      </div>
+      <p id="notice" class="notice" role="status"></p>
+    </main>
+    <footer class="container footer">
+      <span>ХАЛЯВА.EXE / LOCAL ADMIN</span
+      ><span>Только просмотр · Очередь не отправляется на сайт</span>
+    </footer>
+  </body>
+</html>

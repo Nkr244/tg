@@ -6,8 +6,8 @@
     "dev": "nuxt dev",
     "build": "nuxt generate",
     "typecheck": "nuxt typecheck",
-    "test": "vitest run tests/catalog.test.ts",
-    "lint": "nuxt prepare && eslint app scripts tests nuxt.config.ts",
+    "test": "vitest run tests/catalog.test.ts tests/admin.test.ts",
+    "lint": "nuxt prepare && eslint app admin scripts tests nuxt.config.ts",
     "format:check": "prettier --check ."
   },
   "dependencies": {
