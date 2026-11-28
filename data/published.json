@@ -70,5 +70,30 @@
     },
     "messageId": 6,
     "sentAt": "2026-11-27T15:00:52.152Z"
+  },
+  {
+    "key": "7ca27b0ca45bbb5c77c8e66db06d08511291372c94b105d74dbb4f42e3c535a1",
+    "channelId": "free-games",
+    "offer": {
+      "id": "gamerpower:2478",
+      "title": "Boots Quest DX (itch.io) Giveaway",
+      "description": "Download Boots Quest DX for free on itch.io! Boots Quest DX is a small adventure game with lots of puzzles and items to collect!",
+      "category": "game",
+      "platforms": [
+        "PC",
+        "Itch.io"
+      ],
+      "currentPrice": "0",
+      "url": "https://www.gamerpower.com/boots-quest-dx-itch-io-giveaway",
+      "imageUrl": "https://www.gamerpower.com/offers/1b/64cd77c7ac5fe.jpg",
+      "startsAt": "2026-07-31T12:10:25.000Z",
+      "endsAt": "2026-11-30T00:00:00.000Z",
+      "source": "GamerPower",
+      "sourceUrl": "https://www.gamerpower.com/boots-quest-dx-itch-io-giveaway",
+      "fetchedAt": "2026-11-28T00:00:18.824Z"
+    },
+    "messageId": 7,
+    "sentAt": "2026-11-28T06:00:20.532Z",
+    "shortsText": "Shorts: Boots Quest DX (itch.io)\nИсточник: https://www.gamerpower.com/boots-quest-dx-itch-io-giveaway\nПрямая ссылка: https://www.gamerpower.com/boots-quest-dx-itch-io-giveaway\nСрок по источнику: 2026-11-30; точное время проверьте на странице акции.\nПост: https://t.me/halyava_exe_hub/7\n\nПромпт для Gemini: Создай вертикальный ролик 9:16 длительностью около 10 секунд в стиле ретро-терминала Халява.exe. Используй только собственную пиксельную графику, фон #0B0E13, акценты #39FF88 и #FFCC00, текст #F5F5F5. Без чужого геймплея, логотипов игр, платной музыки и резких вспышек. Чёткий крупный текст для телефона. Не добавляй фактов, которых нет ниже.\n0–3 с: крупно «Boots Quest DX (itch.io)».\n3–7 с: «можно забрать бесплатно».\n7–10 с: «Ссылка в канале · Запусти халяву».\nРусская озвучка: «Boots Quest DX (itch.io): можно забрать бесплатно. Ссылка — в Халява.exe.»\nЭкранный текст: «Boots Quest DX (itch.io)» / «можно забрать бесплатно» / «Халява.exe».\nЗаголовок: Boots Quest DX (itch.io) — можно забрать бесплатно | Халява.exe\nОписание: можно забрать бесплатно. Условия и ссылка: https://t.me/halyava_exe_hub/7. Срок по источнику: 2026-11-30; точное время проверьте на странице акции.\n#ХаляваExe #Бесплатно #Игры #Программы"
   }
 ]

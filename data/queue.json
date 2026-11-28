@@ -403,30 +403,6 @@
     "status": "queued"
   },
   {
-    "key": "7ca27b0ca45bbb5c77c8e66db06d08511291372c94b105d74dbb4f42e3c535a1",
-    "channelId": "free-games",
-    "offer": {
-      "id": "gamerpower:2478",
-      "title": "Boots Quest DX (itch.io) Giveaway",
-      "description": "Download Boots Quest DX for free on itch.io! Boots Quest DX is a small adventure game with lots of puzzles and items to collect!",
-      "category": "game",
-      "platforms": [
-        "PC",
-        "Itch.io"
-      ],
-      "currentPrice": "0",
-      "url": "https://www.gamerpower.com/boots-quest-dx-itch-io-giveaway",
-      "imageUrl": "https://www.gamerpower.com/offers/1b/64cd77c7ac5fe.jpg",
-      "startsAt": "2026-07-31T12:10:25.000Z",
-      "endsAt": "2026-11-30T00:00:00.000Z",
-      "source": "GamerPower",
-      "sourceUrl": "https://www.gamerpower.com/boots-quest-dx-itch-io-giveaway",
-      "fetchedAt": "2026-11-28T00:00:18.824Z"
-    },
-    "queuedAt": "2026-11-28T00:00:18.824Z",
-    "status": "sending"
-  },
-  {
     "key": "0b4977fd73239d96185e23502a5e032491639f8031af61edb11ff2535f69cfb2",
     "channelId": "free-games",
     "offer": {
