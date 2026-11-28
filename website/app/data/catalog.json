@@ -1,5 +1,31 @@
 [
   {
+    "id": "gamerpower:2478",
+    "slug": "boots-quest-dx-itch-io-7ca27b0ca4",
+    "title": "Boots Quest DX (itch.io)",
+    "category": "game",
+    "offerType": "temporary_giveaway",
+    "status": "active",
+    "summary": "Boots Quest DX — небольшая приключенческая игра с головоломками и предметами для сбора. Источник сообщает о бесплатной загрузке через itch.io.",
+    "description": "Boots Quest DX — небольшая приключенческая игра с головоломками и предметами для сбора. Источник сообщает о бесплатной загрузке через itch.io.",
+    "cover": "/covers/boots-quest-dx-itch-io-7ca27b0ca4.webp",
+    "platforms": [
+      "PC",
+      "Itch.io"
+    ],
+    "os": [],
+    "currentPrice": "0",
+    "endsAt": "2026-11-30T00:00:00.000Z",
+    "publishedAt": "2026-11-28T06:00:20.532Z",
+    "source": "GamerPower",
+    "sourceUrl": "https://www.gamerpower.com/boots-quest-dx-itch-io-giveaway",
+    "messageId": 7,
+    "telegramUrl": "https://t.me/halyava_exe_hub/7",
+    "seoTitle": "Boots Quest DX (itch.io) — бесплатно | Халява.exe",
+    "seoDescription": "Boots Quest DX — небольшая приключенческая игра с головоломками и предметами для сбора. Источник сообщает о бесплатной загрузке через itch.io.",
+    "lastCheckedAt": "2026-11-28T06:00:20.532Z"
+  },
+  {
     "id": "gamerpower:3852",
     "slug": "contractor-the-clean-up-part-2-e0723e413f",
     "title": "Contractor: The Clean Up Part 2",

@@ -30,6 +30,8 @@ export type PublicOffer = {
 };
 
 const historicalDescriptions: Record<string, string> = {
+  'gamerpower:2478':
+    'Boots Quest DX — небольшая приключенческая игра с головоломками и предметами для сбора. Источник сообщает о бесплатной загрузке через itch.io.',
   'gamerpower:3857':
     'Bread and Fred — двухмерный кооперативный платформер. Два игрока помогают друг другу подняться на заснеженную гору. Источник сообщает о бесплатной раздаче через Epic Games Store.',
   'gamerpower:3859':
